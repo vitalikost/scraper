@@ -1,0 +1,75 @@
+
+    <div class="row">
+      <div class="col-md-12">
+        <header>
+          <h1 class="text-center">Отдохни:</h1>
+        </header>
+      </div>
+    </div>
+
+<div class="row">
+   <div class="col-md-12">
+ <table id="link_tables" class="table">
+      <thead>
+      <tr>
+        <td>
+      Свежачек:
+        <td>
+      <tr>
+      </thead>
+      <tbody>
+
+    <% @link_array_header.each_with_index {|link,index |  %>
+          <tr>
+          <td>
+
+          <div>
+            <h4><%= link.text %></h4>
+
+            <a href="#myModal<%=index%>" class="btn btn-primary" data-toggle="modal">Подробнее</a>
+            <%= link_to("Открыть",link.css('a')[0]['href'] , method: :get, target: "_blank",class:"btn btn-primary" )%>
+
+            <%if(@link_array_info.length > 0) %>
+                <%= @link_array_info[index].text %>
+            <% end %>
+
+            <%= link.css('a')[0]['href'] %>
+
+            <div id="myModal<%=index%>" class="modal fade">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title"><%= link.text %></h4>
+                  </div>
+                  <div class="modal-body">
+                    <%if(@link_array_body.length > 0) %>
+                        <div>
+                          <div>
+                            <% if (@link_array_body[index].css('img')).present? %>
+                              <%=image_tag(@link_array_body[index].css('img')[0]["src"],width: 560, height: 315) %>
+                            <% end %>
+
+                            <% if (@link_array_body[index].css('iframe')).present? %>
+                              <%= content_tag(:iframe, '', src: @link_array_body[index].css('iframe')[0]["src"],
+                                              width: 560, height: 315, frameborder: 0) %>
+                            <% end %>
+                          </div>
+                          <%= @link_array_body[index].text %>
+                        </div>
+                    <%end %>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </td>
+          </tr>
+    <%} %>
+      </tbody>
+    </table>
+   </div>
+</div>
